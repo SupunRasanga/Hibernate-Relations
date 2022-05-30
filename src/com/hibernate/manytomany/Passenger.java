@@ -1,14 +1,19 @@
 package com.hibernate.manytomany;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "passenger_manytomany")
 public class Passenger {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +25,22 @@ public class Passenger {
 	private String location;
 	@Column
 	private int age;
+	@ManyToMany
+	@JoinTable(
+				name = "bus_passenger" ,
+				joinColumns = @JoinColumn(name="passenger_id"),
+				inverseJoinColumns = @JoinColumn(name="bus_id")
+			)
+			
+	private List<Bus> bus = new ArrayList();
 	
+	
+	public List<Bus> getBus() {
+		return bus;
+	}
+	public void setBus(List<Bus> bus) {
+		this.bus = bus;
+	}
 	public long getPassengerId() {
 		return passengerId;
 	}

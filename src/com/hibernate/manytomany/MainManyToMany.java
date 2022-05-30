@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import antlr.collections.List;
+
 public class MainManyToMany {
 	public static void main(String[] args) {
 		Bus bus1 = new Bus();
@@ -31,15 +33,35 @@ public class MainManyToMany {
 		bus1.getPassenger().add(passenger2);
 		bus2.getPassenger().add(passenger2);
 		
+		passenger1.getBus().add(bus1);
+		passenger1.getBus().add(bus2);
+		passenger2.getBus().add(bus1);
+		passenger2.getBus().add(bus2);
+		
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.save(bus1);
-		session.save(bus2);
-		session.save(passenger1);
-		session.save(passenger2);
+		
+		//Cascade Type Enabled - All
+		//session.save(bus1);session.save(bus2);
+		
+		//session.save(passenger1);
+		//session.save(passenger2);
+		
+		Bus bus = session.get(Bus.class, 1L);
+		System.out.println(bus.getPassenger().size());
+		
+//		
+//		List<Passenger> passenger = Bus.getPassenger();
+//		for(Passenger passenger : Pass) {
+//			System.out.println(passenger.getBus());
+//		}
+		
+		
 		session.getTransaction().commit();
 		session.close();
+		
+		
 		
 	}
 

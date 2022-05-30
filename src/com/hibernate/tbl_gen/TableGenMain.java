@@ -1,38 +1,36 @@
-package com.hibernate.main;
+package com.hibernate.tbl_gen;
 
-import java.util.Date;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.hibernate.domain.Animal;
 import com.hibernate.domain.Cars;
-import com.hibernate.domain.Student;
 
 
-public class HibernateMain {
-	
+public class TableGenMain {
 	public static void main(String[] args) {
-		Student s = new Student();
-		s.setFirstName("Nimal");
-		s.setLastName("Perera");
-		s.setContactNo("0775678912");
-		s.setDob(new Date());
-		s.setAddress("Negombo");
 		
+		Cars car = new Cars();
+		car.setMake("Honda");
+		car.setModel("Vissel");
 		
+		Animal animal = new Animal();
+		animal.setName("Tommy");
+		animal.setAge(8);
 		
 		
 		
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.save(s);
 		
+		session.save(car);
+		session.save(animal);
 		
 		session.getTransaction().commit();
 		session.close();
 		
 	}
-
 }

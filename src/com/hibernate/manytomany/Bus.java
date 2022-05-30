@@ -3,16 +3,17 @@ package com.hibernate.manytomany;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "bus_manytomany")
 public class Bus {
 	
 	@Id
@@ -25,7 +26,7 @@ public class Bus {
 	private String driver;
 	@Column
 	private String root;
-	@ManyToMany
+	@ManyToMany(mappedBy = "bus", cascade = CascadeType.ALL)
 	private List<Passenger> passenger = new ArrayList<Passenger>();
 	
 	public long getBusId() {
